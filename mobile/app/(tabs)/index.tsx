@@ -4,8 +4,10 @@ import { Platform, StyleSheet } from 'react-native';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { HelloWave } from '@shared/components/hello-wave';
+import { HelloWave } from "@shared/ui/components/hello-wave";
 import { Link } from 'expo-router';
+import React from 'react';
+import Cat from "../../../shared/components/test";
 
 export default function HomeScreen() {
   return (
@@ -74,6 +76,9 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
+
+      <Cat />
+      
     </ParallaxScrollView>
   );
 }
