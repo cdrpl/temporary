@@ -4,8 +4,12 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@shared/*": ["../shared/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@shared/*": [
+        "../shared/*"
+      ]
     }
   },
   "include": [
@@ -13,6 +17,8 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "../shared/**/*.tsx"
+    "../shared/**/*.tsx",
+    "types/nativewind-env.d.ts",
+    "nativewind-env.d.ts"
   ]
 }
