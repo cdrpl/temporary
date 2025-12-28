@@ -1,7 +1,7 @@
-import { NotesContext } from "@/context/notes-context";
-import { Link } from "expo-router";
+import { deleteNote, NotesContext } from "@/context/notes-context";
+import { useRouter } from "expo-router";
 import { useContext } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 
 export default function Index() {
   const ctx = useContext(NotesContext);
@@ -11,15 +11,27 @@ export default function Index() {
   }
 
   const { notes } = ctx;
+  const router = useRouter();
+
+  const handleDelete = (index: number) => {
+    Alert.alert(
+      "Delete note?",
+      "Are you sure you want to delete this note?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Delete", style: "destructive", onPress: () => deleteNote(ctx, index) }
+      ]
+    );
+  };
 
   return (
     <View className="flex-1 bg-white">
-      {/* Add Note button */}
-      <Link href="/add-note" asChild>
-        <Pressable className="px-4 py-3 bg-blue-600">
-          <Text className="text-white text-lg font-semibold">Add Note</Text>
-        </Pressable>
-      </Link>
+      <Pressable 
+        onPress={() => router.push("/add-note")}
+        className="px-4 py-3 bg-blue-600"
+      >
+        <Text className="text-white text-lg font-semibold">Add Note</Text>
+      </Pressable>
 
       <ScrollView className="p-4">
         {notes.length === 0 ? (
@@ -33,6 +45,13 @@ export default function Index() {
               <Text className="text-base text-gray-900">
                 {note}
               </Text>
+
+              <Pressable
+                className="px-3 py-1 bg-red-600 rounded"
+                onPress={() => handleDelete(index)}
+              >
+                <Text className="text-white font-semibold">Delete</Text>
+              </Pressable>
             </View>
           ))
         )}
