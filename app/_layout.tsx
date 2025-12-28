@@ -1,24 +1,14 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { NotesContext } from "@/context/notes-context";
+import { Stack } from "expo-router";
+import { useState } from "react";
+import "../global.css";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
+  const [notes, setNotes] = useState<string[]>([]);
+  
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <NotesContext.Provider value={{ notes, setNotes }}>
+      <Stack />
+    </NotesContext.Provider>
   );
 }
