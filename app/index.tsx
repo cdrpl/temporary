@@ -1,6 +1,7 @@
-import { deleteNote, NotesContext } from "@/context/notes-context";
+import { deleteNote, NotesContext } from "@/src/notes-context";
+import { readFile } from "@/src/persistence";
 import { useRouter } from "expo-router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 
 export default function Index() {
@@ -10,8 +11,21 @@ export default function Index() {
     throw new Error("NotesContext is missing. Make sure you wrapped this screen in a Provider.");
   }
 
-  const { notes } = ctx;
+  const { notes, setNotes } = ctx;
   const router = useRouter();
+
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    readFile().then((notes) => {
+      setNotes(notes);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   const handleDelete = (index: number) => {
     Alert.alert(

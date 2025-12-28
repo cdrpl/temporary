@@ -1,4 +1,5 @@
-import { NotesContext } from "@/context/notes-context";
+import { NotesContext } from "@/src/notes-context";
+import { writeFile } from "@/src/persistence";
 import { useRouter } from "expo-router";
 import { useContext, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
@@ -17,10 +18,11 @@ export default function NotesScreen() {
   function handleSave() {
     if (text.trim().length === 0) return;
 
-    // Append note (IMMUTABLE update)
-    setNotes([...notes, text]);
+    const appended = [...notes, text];
 
-    // Go back to index screen
+    setNotes(appended);
+    writeFile(appended);
+
     router.back();
   }
 

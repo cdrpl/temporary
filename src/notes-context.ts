@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { writeFile } from "./persistence";
 
 export type NotesContextType = {
   notes: string[],
@@ -8,5 +9,7 @@ export type NotesContextType = {
 export const NotesContext = createContext<NotesContextType | undefined>(undefined);
 
 export function deleteNote(ctx: NotesContextType, index: number) {
-    ctx.setNotes(prev => prev.filter((_, i) => i !== index));
+  const updatedNotes = ctx.notes.filter((_, i) => i !== index);
+  ctx.setNotes(updatedNotes);
+  writeFile(updatedNotes);
 }

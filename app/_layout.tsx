@@ -1,4 +1,4 @@
-import { NotesContext } from "@/context/notes-context";
+import { NotesContext } from "@/src/notes-context";
 import { Stack } from "expo-router";
 import { useState } from "react";
 import "../global.css";
